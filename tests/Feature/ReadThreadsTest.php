@@ -54,11 +54,11 @@ class ReadThreadsTest extends TestCase
     {
         $this->singIn(create('App\User', ['name' => 'Jonathan']));
         $threadOne = create('App\Thread', ['user_id' => auth()->id()]);
-        $theardTwo = create('App\Thread');
+        $threadTwo = create('App\Thread');
 
         $this->get('/threads?by=Jonathan')
             ->assertSee($threadOne->title)
-            ->assertDontSee($theardTwo->title);
+            ->assertDontSee($threadTwo->title);
 
 
     }
