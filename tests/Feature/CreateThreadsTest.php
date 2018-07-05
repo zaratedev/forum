@@ -26,4 +26,35 @@ class CreateThreadsTest extends TestCase
         $this->get('/threads/create')
             ->assertRedirect('/login');
     }
+
+    /** @test */
+    function a_thread_requires_a_title()
+    {
+        $this->singIn();
+        $thread = make('App\Thread', ['title' => null]);
+
+        $this->post('/threads', $thread->toArray())
+            ->assertSessionHasErrors('title');
+    }
+
+    /** @test */
+    function a_thread_requires_a_body()
+    {
+        $this->singIn();
+        $thread = make('App\Thread', ['body' => null]);
+
+        $this->post('/threads', $thread->toArray())
+            ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    function a_thread_requires_a_channel()
+    {
+        $this->singIn();
+        $thread = make('App\Thread', ['channel_id' => null]);
+
+        $this->post('/threads', $thread->toArray())
+            ->assertSessionHasErrors('channel_id');
+    }
+
 }
