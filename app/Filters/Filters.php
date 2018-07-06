@@ -21,6 +21,10 @@ abstract class Filters {
             $this->by($this->request->by);
         }
 
+        if ($this->request->has('popular')) {
+            $this->popular($this->request->popular);
+        }
+
         return $this->builder;
     }
 }
