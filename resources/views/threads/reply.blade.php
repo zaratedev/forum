@@ -7,13 +7,7 @@
                   said {{ $reply->created_at->diffForHumans() }}
               </h5>
               <div>
-
-                  <form action="{{ url("/replies/$reply->id/favorites") }}" method="post">
-                      {{ csrf_field() }}
-                      <button type="submit" class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                          {{ $reply->favorites_count }} {{ str_plural('Like', $reply->favorites_count) }}
-                      </button>
-                  </form>
+                <favorite :reply="{{ $reply }}"></favorite>
               </div>
           </div>
       </div>
@@ -35,11 +29,6 @@
           </button>
 
           <button class="btn btn-danger btn-xs" @click="destroy">Delete</button>
-          <!--<form action="{{ url("/replies/".$reply->id) }}" method="POST">
-              {{ csrf_field() }}
-              {{ method_field('DELETE') }}
-              <button type="submit" class="btn btn-danger btn-xs">Delete</button>
-          </form>-->
         </div>
       @endcan
   </div>

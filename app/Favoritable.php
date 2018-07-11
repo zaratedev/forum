@@ -3,7 +3,7 @@
 namespace App;
 
 trait Favoritable {
-  
+
   public function favorites() {
       return $this->morphMany(Favorite::class, 'favorited');
   }
@@ -13,8 +13,20 @@ trait Favoritable {
           return $this->favorites()->create(['user_id' => auth()->id()]);
   }
 
+  public function unfavorite()
+  {
+    $attributes = ['user_id' => auth()->id()];
+
+    $this->favorites()->where($attributes)->delete();
+  }
+
   public function isFavorited() {
       return !! $this->favorites->where('user_id', auth()->id())->count();
+  }
+
+  public function getIsFavoritedAttribute()
+  {
+    return $this->isFavorited();
   }
 
   public function getFavoritesCountAttribute()
