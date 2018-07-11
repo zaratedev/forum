@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use App\Activity;
+use Carbon\Carbon;
 
 class ActivityTest extends TestCase
 {
@@ -35,6 +36,26 @@ class ActivityTest extends TestCase
         $reply = create('App\Reply');
 
         $this->assertEquals(2, Activity::count());
+
+    }
+
+    /** @test */
+    function it_fetches_a_feed_for_any_user()
+    {
+      $this->singIn();
+
+      create('App\Thread', ['user_id' => auth()->id()]);
+
+      create('App\Thread', [
+        'user_id' => auth()->id(),
+        'created_at' => Carbon::now()->subWeek()
+      ]);
+
+      $feed = Activity::feed(auth()->user());
+
+      $this->assertTrue($feed->keys()->contains(
+        Carbon::now()->format('Y-m-d')
+      ));
 
     }
 }
