@@ -1088,8 +1088,6 @@ module.exports = __webpack_require__(49);
 
 __webpack_require__(12);
 
-window.Vue = __webpack_require__(36);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -1117,9 +1115,9 @@ window._ = __webpack_require__(13);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(15);
+    window.$ = window.jQuery = __webpack_require__(15);
 
-  __webpack_require__(16);
+    __webpack_require__(16);
 } catch (e) {}
 
 /**
@@ -1141,27 +1139,19 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+window.Vue = __webpack_require__(36);
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+window.events = new Vue();
 
-// import Echo from 'laravel-echo'
+window.events = new Vue();
 
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key',
-//     cluster: 'mt1',
-//     encrypted: true
-// });
+window.flash = function (message) {
+    window.events.$emit('flash', message);
+};
 
 /***/ }),
 /* 13 */
@@ -43754,6 +43744,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         body: this.body
       });
       this.editing = false;
+
+      flash('Reply Updated');
+    },
+    destroy: function destroy() {
+      axios.delete('/replies/' + this.atributtes.id);
+
+      $(this.$el).fadeOut(300, function () {
+        flash('Reply deleted');
+      });
     }
   }
 });

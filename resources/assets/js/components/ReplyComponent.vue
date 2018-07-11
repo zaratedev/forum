@@ -13,6 +13,15 @@
           body: this.body
         });
         this.editing = false;
+
+        flash('Reply Updated');
+      },
+      destroy() {
+        axios.delete('/replies/' + this.atributtes.id);
+
+        $(this.$el).fadeOut(300, () => {
+          flash('Reply deleted');
+        });
       }
     }
   }

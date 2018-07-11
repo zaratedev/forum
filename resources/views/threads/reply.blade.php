@@ -33,11 +33,13 @@
           <button class="btn-primary btn-xs btn" style="margin-right: 1em;" @click="editing = true">
             Edit
           </button>
-          <form action="{{ url("/replies/".$reply->id) }}" method="POST">
+
+          <button class="btn btn-danger btn-xs" @click="destroy">Delete</button>
+          <!--<form action="{{ url("/replies/".$reply->id) }}" method="POST">
               {{ csrf_field() }}
               {{ method_field('DELETE') }}
               <button type="submit" class="btn btn-danger btn-xs">Delete</button>
-          </form>
+          </form>-->
         </div>
       @endcan
   </div>
