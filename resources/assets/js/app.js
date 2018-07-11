@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('flash', require('./components/FlashComponent.vue'));
+Vue.component('reply', require('./components/ReplyComponent.vue'));
 
 const app = new Vue({
     el: '#app'
