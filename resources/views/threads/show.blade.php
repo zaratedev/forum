@@ -28,7 +28,7 @@
                 <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
 
                 {{-- {{ $replies->links() }} --}}
-                @if(auth()->check())
+                {{-- @if(auth()->check())
                   <form action="{{ url($thread->path().'/replies') }}" method="post">
                       {{ csrf_field() }}
                       <div class="form-group">
@@ -40,7 +40,7 @@
                   <div class="alert alert-info" role="alert">
                       Please <a href="{{ route('login') }}">sing in</a> to participate in this discussion.
                   </div>
-                @endif
+                @endif --}}
             </div>
             <div class="col-md-4">
               <div class="panel panel-default">
