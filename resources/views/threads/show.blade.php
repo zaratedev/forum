@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<thread-view inline-template :initial-replies-count="{{ $thread->replies_count }}">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
@@ -24,10 +25,9 @@
                         {{ $thread->body }}
                     </div>
                 </div>
-                @foreach($replies as $reply)
-                    @include('threads.reply')
-                @endforeach
-                {{ $replies->links() }}
+                <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+
+                {{-- {{ $replies->links() }} --}}
                 @if(auth()->check())
                   <form action="{{ url($thread->path().'/replies') }}" method="post">
                       {{ csrf_field() }}
@@ -47,10 +47,12 @@
                 <div class="panel-body">
                   This thread was publish {{ $thread->created_at->diffForHumans() }} by
                   <a href="#">{{ $thread->creator->name }}</a>,
-                  and currently has {{ $thread->replies_count }} comments.
+                  and currently has
+                  <span v-text="repliesCount"></span> comments.
                 </div>
               </div>
             </div>
         </div>
     </div>
+</thread-view>
 @endsection

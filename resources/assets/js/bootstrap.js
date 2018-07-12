@@ -13,6 +13,15 @@ try {
     require('bootstrap-sass');
 } catch (e) {}
 
+window.Vue = require('vue');
+
+Vue.prototype.authorize = function (handler) {
+
+  let user = window.App.user;
+
+  return user ? handler(user) : false;
+};
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -36,9 +45,7 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
-window.Vue = require('vue');
 
-window.events = new Vue();
 
 window.events = new Vue();
 

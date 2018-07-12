@@ -14,7 +14,7 @@ require('./bootstrap');
  */
 
 Vue.component('flash', require('./components/FlashComponent.vue'));
-Vue.component('reply', require('./components/ReplyComponent.vue'));
+Vue.component('thread-view', require('./pages/Thread.vue'));
 
 const app = new Vue({
     el: '#app'
