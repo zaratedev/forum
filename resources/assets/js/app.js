@@ -16,6 +16,7 @@ require('./bootstrap');
 Vue.component('flash', require('./components/FlashComponent.vue'));
 Vue.component('paginator', require('./components/PaginatorComponent.vue'));
 Vue.component('thread-view', require('./pages/Thread.vue'));
+Vue.component('user-notifications', require('./components/UserNotifications.vue'));
 
 const app = new Vue({
     el: '#app'
