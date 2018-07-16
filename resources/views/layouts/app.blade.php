@@ -24,6 +24,7 @@
       .level {display: flex; align-items: center;}
       .flex {flex: 1;}
     </style>
+    @yield('header')
 </head>
 <body>
     <div id="app">

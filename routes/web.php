@@ -49,3 +49,5 @@ Route::delete(
     '/profiles/{user}/notifications/{notification}',
     'UserNotificationsController@destroy'
 )->middleware('auth');
+
+Route::get('api/users', 'Api\UsersController@index');

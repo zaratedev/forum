@@ -21,7 +21,7 @@
           </div>
 
         </div>
-        <p v-else v-html="body"></p>
+        <div v-else v-html="body"></div>
       </div>
       <div class="panel-footer level" v-if="canUpdate">
         <button class="btn-primary btn-xs btn" style="margin-right: 1em;" @click="editing = true">
