@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\ThreadHasNewReply;
+use App\Inspections\Spam;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -44,9 +45,12 @@ class Thread extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function addReply($reply) {
-
-        (new \App\Spam)->detect(request('body'));
+    /**
+     * @param $reply
+     * @return Model
+     */
+    public function addReply($reply)
+    {
       $reply = $this->replies()->create($reply);
 
       event(new ThreadHasNewReply($this, $reply));

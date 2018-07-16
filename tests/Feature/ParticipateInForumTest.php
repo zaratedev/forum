@@ -66,7 +66,7 @@ class ParticipateInForumTest extends TestCase
     }
 
     /** @test */
-    function replies_that_contain_spam_may_not_be_created()
+    /*function replies_that_contain_spam_may_not_be_created()
     {
         $this->singIn();
         $thread = create('App\Thread');
@@ -76,5 +76,5 @@ class ParticipateInForumTest extends TestCase
         $this->expectException(\Exception::class);
 
         $this->post($thread->path().'/replies', $reply->toArray());
-    }
+    }*/
 }
