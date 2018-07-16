@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Inspections\Spam;
+use App\Notifications\YourWereMentioned;
 use App\Reply;
 use App\Thread;
+use App\User;
 use Illuminate\Http\Request;
 
 class RepliesController extends Controller

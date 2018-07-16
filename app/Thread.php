@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\ThreadHasNewReply;
 use App\Inspections\Spam;
+use App\Notifications\YourWereMentioned;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -53,12 +54,21 @@ class Thread extends Model
     {
       $reply = $this->replies()->create($reply);
 
-      event(new ThreadHasNewReply($this, $reply));
+      //event(new ThreadHasNewReply($this, $reply));
       // prepare notifications for all subscribers
-     /* $this->subscriptions
+      $this->subscriptions
           ->where('user_id', '!=' , $reply->user_id)
           ->each
-          ->notify($reply);*/
+          ->notify($reply);
+
+        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
+
+        foreach ($matches[1] as $name) {
+            $user = User::whereName($name)->first();
+            if ($user) {
+                $user->notify(new YourWereMentioned($reply));
+            }
+        }
 
       return $reply;
     }
