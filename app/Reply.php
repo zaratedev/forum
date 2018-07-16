@@ -33,4 +33,13 @@ class Reply extends Model
     {
       return $this->thread->path();
     }
+
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] = preg_replace(
+            '/@([\w\-]+)/',
+            '<a href="/profiles/$1">$0</a>',
+            $body
+        );
+    }
 }
