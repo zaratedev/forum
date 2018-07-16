@@ -4,35 +4,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                @foreach($threads as $thread)
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="level">
-                            <h4 class="flex">
-                                <a href="{{ url($thread->path() ) }}">
-                                  @if (auth()->check() && $thread->hasUpdatesFor(Auth()->user()))
-                                    <strong>
-                                      {{ $thread->title }}
-                                    </strong>
-                                  @else
+                @include('threads._list')
 
-                                    {{ $thread->title }}
-
-                                  @endif
-
-                                </a>
-                            </h4>
-                            <a href="#">
-                                <strong>{{ $thread->replies_count }} {{str_plural('reply', $thread->replies_count)}}</strong>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="body">{{ $thread->body }}</div>
-                    </div>
-                </div>
-                @endforeach
+                {{ $threads->render() }}
             </div>
         </div>
     </div>
