@@ -36,6 +36,9 @@ export default {
   methods: {
     addReply() {
       axios.post(this.endpoint, { body: this.body })
+          .catch( error => {
+              flash(error.response.data, 'danger')
+          })
       .then( ({data}) => {
         this.body = '';
         flash('Your reply has been posted');
