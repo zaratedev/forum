@@ -29,12 +29,10 @@ class RepliesController extends Controller
      * @param Spam $spam
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread, Spam $spam)
+    public function store($channelId, Thread $thread)
     {
         try {
-            $this->validate(request(), ['body' => 'required']);
-
-            $spam->detect(request('body'));
+            $this->validate(request(), ['body' => 'required|spamfree']);
 
             $reply = $thread->addReply([
                 'body' => request('body'),
