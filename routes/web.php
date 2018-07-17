@@ -51,3 +51,4 @@ Route::delete(
 )->middleware('auth');
 
 Route::get('api/users', 'Api\UsersController@index');
+Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth');
