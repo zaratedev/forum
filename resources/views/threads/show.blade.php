@@ -10,7 +10,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="level">
-                            <img src="{{ asset($thread->creator->avatar()) }}" alt="" width="25" height="25" style="margin-right: 1em;">
+                            <img src="{{ asset($thread->creator->avatar_path) }}" alt="" width="25" height="25" style="margin-right: 1em;">
                             
                             
                             <span class="flex">
