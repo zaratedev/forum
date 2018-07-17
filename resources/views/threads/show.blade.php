@@ -10,6 +10,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="level">
+                            <img src="{{ asset($thread->creator->avatar()) }}" alt="" width="25" height="25" style="margin-right: 1em;">
+                            
+                            
                             <span class="flex">
                                 <a href="{{ route('profile', $thread->creator) }}">{{$thread->creator->name}}</a> posted:
                                 {{ $thread->title }}
