@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Channel;
-use App\Filters\ThreadFilter;
 use App\Thread;
-use Illuminate\Http\Request;
+use App\Channel;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Filters\ThreadFilter;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadsController extends Controller
 {
@@ -39,7 +40,12 @@ class ThreadsController extends Controller
           return $threads;
         }
 
-        return view('threads.index', compact('threads'));
+        $thrending = collect(Redis::zrevrange('trending_threads', 0, 4))->map( function($thread) {
+            return json_decode($thread);
+        });
+
+
+        return view('threads.index', compact('threads', 'thrending'));
     }
 
     /**
@@ -89,6 +95,11 @@ class ThreadsController extends Controller
         if (Auth()->check()) {
           Auth()->user()->read($thread);
         }
+
+        Redis::zincrby('trending_threads', 1, json_encode([
+            'title' => $thread->title,
+            'path' => $thread->path()
+        ]));
 
         return view('threads.show', compact('thread'));
     }
