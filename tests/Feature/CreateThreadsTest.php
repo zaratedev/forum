@@ -9,14 +9,14 @@ class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
     /** @test */
-    function an_authenticated_user_can_create_new_forum_thread() {
-        // signed in user
-        $this->singIn();
-        // When we hit the endpoint to create a new thread
-        $thread = create('App\Thread');
-        $this->post('/threads', $thread->toArray());
-        // Then, when we visit the thread page
-        $this->get($thread->path())
+    function a_user_can_create_new_forum_thread() {
+        $user = create('App\User', ['confirmed' => true]);
+        $this->singIn($user);
+
+        $thread = make('App\Thread');
+        $response = $this->post('/threads', $thread->toArray());
+
+        $this->get($response->headers->get('Location'))
             ->assertSee($thread->title)
             ->assertSee($thread->body);
     }
