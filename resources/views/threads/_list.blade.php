@@ -30,7 +30,7 @@
             <div class="body">{{ $thread->body }}</div>
         </div>
         <div class="panel-body">
-            {{ $thread->visits() }} Visits
+            {{ $thread->visits()->count() }} Visits
         </div>
     </div>
 @endforeach
