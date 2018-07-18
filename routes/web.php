@@ -50,5 +50,7 @@ Route::delete(
     'UserNotificationsController@destroy'
 )->middleware('auth');
 
+Route::get('/register/confirm', 'Api\RegistrationConfirmController@index');
+
 Route::get('api/users', 'Api\UsersController@index');
 Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
