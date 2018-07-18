@@ -65,6 +65,12 @@ class CreateThreadsTest extends TestCase
         $response->assertRedirect('/login');
 
     }
+    
+    /** @test */
+    function authenticated_user_must_first_confirm_their_email_address_before_creating_threads()
+    {
+        $this->publishThread()->assertRedirect('/threads')->assertSessionHas('flash', 'You must first confirm your email address');
+    }
 
     /** @test */
     function authorized_users_can_delete_threads()
@@ -103,5 +109,15 @@ class CreateThreadsTest extends TestCase
         $this->singIn();
 
         $this->delete($thread->path())->assertStatus(403);
+    }
+
+    /** @test */
+    function publishThread()
+    {
+        $this->withExceptionHandling()->singIn();
+
+        $thread = make('App\Thread');
+
+        return $this->post('/threads', $thread->toArray());
     }
 }
