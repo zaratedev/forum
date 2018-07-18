@@ -10,11 +10,16 @@ class RegistrationConfirmController extends Controller
 {
     public function index()
     {
+      try {
         User::where('confirmation_token', request('token'))
-            ->firstOrFail()
-            ->confirm();
+          ->firstOrFail()
+          ->confirm();
+      }
+      catch(\Exception $e)
+      {
+				return redirect('/threads')->with('flash', 'Token Invalid');
+      }
         
-        return redirect('/threads')
-                ->with('flash', 'Your account is now activated!');
+      return redirect('/threads')->with('flash', 'Your account is now activated!');
     }
 }

@@ -30,7 +30,9 @@ class CreateThreadsTest extends TestCase
     /** @test */
     function a_thread_requires_a_title()
     {
-        $this->singIn();
+        $user = make('App\User', ['confirmed' => true]);
+
+        $this->singIn($user);
         $thread = make('App\Thread', ['title' => null]);
 
         $this->post('/threads', $thread->toArray())
@@ -40,7 +42,9 @@ class CreateThreadsTest extends TestCase
     /** @test */
     function a_thread_requires_a_body()
     {
-        $this->singIn();
+        $user = make('App\User', ['confirmed' => true]);
+
+        $this->singIn($user);
         $thread = make('App\Thread', ['body' => null]);
 
         $this->post('/threads', $thread->toArray())
@@ -50,7 +54,9 @@ class CreateThreadsTest extends TestCase
     /** @test */
     function a_thread_requires_a_channel()
     {
-        $this->singIn();
+        $user = make('App\User', ['confirmed' => true]);
+
+        $this->singIn($user);
         $thread = make('App\Thread', ['channel_id' => null]);
 
         $this->post('/threads', $thread->toArray())
@@ -111,7 +117,6 @@ class CreateThreadsTest extends TestCase
         $this->delete($thread->path())->assertStatus(403);
     }
 
-    /** @test */
     function publishThread()
     {
         $this->withExceptionHandling()->singIn();
