@@ -2,14 +2,14 @@
 
 namespace App;
 
-use App\Events\ThreadHasNewReply;
 use App\Inspections\Spam;
-use App\Notifications\YourWereMentioned;
+use App\Events\ThreadHasNewReply;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\YourWereMentioned;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, RecordsVisits;
 
     protected $guarded = [];
 

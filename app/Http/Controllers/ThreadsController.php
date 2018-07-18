@@ -41,7 +41,7 @@ class ThreadsController extends Controller
           return $threads;
         }
 
-
+        
         return view('threads.index', [
             'threads' => $threads,
             'thrending' => $thrending->get()
@@ -97,6 +97,7 @@ class ThreadsController extends Controller
         }
 
         $thrending->push($thread);
+        $thread->recordVisit();
 
         return view('threads.show', compact('thread'));
     }
