@@ -19,34 +19,37 @@ class Thread extends Model
 
     public static function boot()
     {
-      parent::boot();
+        parent::boot();
 
-      static::addGlobalScope('replyCount', function($builder) {
-        $builder->withCount('replies');
-      });
+        static::addGlobalScope('replyCount', function ($builder) {
+            $builder->withCount('replies');
+        });
 
-      static::deleting(function ($thread) {
-        $thread->replies->each(function($reply) {
-           $reply->delete();
-         });
-      });
+        static::deleting(function ($thread) {
+            $thread->replies->each(function ($reply) {
+                $reply->delete();
+            });
+        });
 
-      static::created(function ($thread) {
-        $thread->update(['slug' => $thread->title]);
+        static::created(function ($thread) {
+            $thread->update(['slug' => $thread->title]);
         });
     }
 
-    public function path() {
+    public function path()
+    {
         return "/threads/{$this->channel->slug}/{$this->slug}";
     }
 
-    public function replies() {
+    public function replies()
+    {
         return $this->hasMany(Reply::class);
-            //->withCount('favorites')
+        //->withCount('favorites')
             //->with('owner');
     }
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
@@ -56,12 +59,12 @@ class Thread extends Model
      */
     public function addReply($reply)
     {
-      $reply = $this->replies()->create($reply);
+        $reply = $this->replies()->create($reply);
 
-      //event(new ThreadHasNewReply($this, $reply));
-      // prepare notifications for all subscribers
-      $this->subscriptions
-          ->where('user_id', '!=' , $reply->user_id)
+        //event(new ThreadHasNewReply($this, $reply));
+        // prepare notifications for all subscribers
+        $this->subscriptions
+          ->where('user_id', '!=', $reply->user_id)
           ->each
           ->notify($reply);
 
@@ -74,14 +77,16 @@ class Thread extends Model
             }
         }
 
-      return $reply;
+        return $reply;
     }
 
-    public function channel() {
+    public function channel()
+    {
         return $this->belongsTo(Channel::class);
     }
 
-    public function scopeFilter($query, $filters) {
+    public function scopeFilter($query, $filters)
+    {
         return $filters->apply($query);
     }
 
@@ -112,9 +117,9 @@ class Thread extends Model
 
     public function hasUpdatesFor($user)
     {
-      $key = $user->visitedThreadCacheKey($this);
+        $key = $user->visitedThreadCacheKey($this);
 
-      return $this->updated_at > cache($key);
+        return $this->updated_at > cache($key);
     }
 
     public function getRouteKeyName()
@@ -128,5 +133,10 @@ class Thread extends Model
             $slug = "{$slug}-{$this->id}";
         }
         $this->attributes['slug'] = $slug;
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $this->update(['best_reply_id' => $reply->id]);
     }
 }

@@ -21,7 +21,7 @@ class Reply extends Model
 
     public function thread()
     {
-    	return $this->belongsTo(Thread::class);
+        return $this->belongsTo(Thread::class);
     }
 
     public function wasJustPublished()
@@ -31,7 +31,7 @@ class Reply extends Model
 
     public function path()
     {
-      return $this->thread->path();
+        return $this->thread->path();
     }
 
     public function setBodyAttribute($body)
@@ -41,5 +41,10 @@ class Reply extends Model
             '<a href="/profiles/$1">$0</a>',
             $body
         );
+    }
+
+    public function isBest()
+    {
+        return $this->thread->best_reply_id == $this->id;
     }
 }
